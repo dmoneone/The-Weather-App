@@ -1,6 +1,6 @@
 <template>
   <div class="weather">
-    <select class="custom-select mr-sm-2" v-model="city">
+    <select class="custom-select mr-sm-2" v-model="city" @change="loadForecast">
       <option value="none">This city does not exist</option>
       <option value="Vinnytsia">Vinnytsia</option>
       <option value="Dnipropetrovsk">Dnipropetrovsk</option>
@@ -29,8 +29,7 @@
       <option value="Chernivtsi">Chernivtsi</option>
       <option value="Chernihiv">Chernihiv</option>
     </select>
-    <button  class="btn btn-success" @click="loadForecast">load</button>
-    <ul>
+    <ul style="padding: 0">
       <Loader v-if="loader" style="margin-top: 50px"/>
       <Forecast
         v-else
@@ -64,7 +63,7 @@ export default {
       this.showForecast = true;
       //https://ipinfo.io/
       //http://api.openweathermap.org/data/2.5/weather?q=${this.city},ua&appid=50744a6264d8ebe36f256f3e998b39b2&units=metric
-      fetch(`http://api.openweathermap.org/data/2.5/weather?q=${this.city},ua&appid=50744a6264d8ebe36f256f3e998b39b2&units=metric`)
+      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.city},ua&appid=50744a6264d8ebe36f256f3e998b39b2&units=metric`)
         .then(res => res.json())
         .then(data => {
           setTimeout(()=>{
@@ -75,7 +74,7 @@ export default {
     }
   },
   mounted() {
-      fetch('http://ip-api.com/json/?fields=61439')
+      fetch('https://geoip-db.com/json/')
         .then(res => res.json())
         .then(data => this.city = data.city)
         .then(()=>this.loadForecast())
